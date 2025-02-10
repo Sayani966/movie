@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Comic Neue', cursive;
+            transition: background 0.5s, color 0.5s;
+            background: linear-gradient(45deg, #ff6f61, #ffde59);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .dark-mode {
+            background: linear-gradient(45deg, #1a1a1a, #444);
+            color: white;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center;
+        }
+        .dark-mode .container {
+            background: #2a2a2a;
+        }
+        .switch-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .switch-label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input { display: none; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #ffde59;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #ff6f61;
+            margin-bottom: 15px;
+        }
+        .dark-mode h1 {
+            color: #ffde59;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            background: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #ff3b3b;
+        }
+        .movie-details {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 15px;
+            background: #222;
+            color: white;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 100%;
+        }
+        .footer a {
+            color: #ffde59;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Movie Gallery</h1>
+        <div class="switch-container">
+            <span class="switch-label" id="modeLabel">Dark Mode</span>
+            <label class="switch">
+                <input type="checkbox" id="modeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <input id="movie_name" type="text" placeholder="Enter Movie IMDb ID (e.g., tt13186482)">
+        <button id="update_btn">Load Movie</button>
+        <iframe id="movie_iframe" allowfullscreen></iframe>
+        <div class="movie-details" id="movie_details"></div>
+    </div>
+    <footer class="footer">
+        Created by Sayani Rana | 
+        <a href="https://www.linkedin.com/in/sayani-rana-071988326/" target="_blank">LinkedIn</a> | 
+        <a href="https://github.com/Sayani966" target="_blank">GitHub</a>
+    </footer>
+    <script>
+        const modeToggle = document.getElementById('modeToggle');
+        const modeLabel = document.getElementById('modeLabel');
+        const movieDetails = document.getElementById('movie_details');
+
+        modeToggle.addEventListener('change', function() {
+            document.body.classList.toggle('dark-mode', this.checked);
+            modeLabel.textContent = this.checked ? 'Light Mode' : 'Dark Mode';
+        });
+
+        document.getElementById('update_btn').addEventListener('click', function() {
+            let movieCode = document.getElementById('movie_name').value.trim();
+            if (movieCode) {
+                document.getElementById('movie_iframe').src = `https://vidsrc.xyz/embed/movie?imdb=${movieCode}`;
+            } else {
+                alert('Please enter a valid movie code.');
+            }
+        });
+    </script>
+</body>
+</html>
